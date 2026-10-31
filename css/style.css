@@ -74,7 +74,7 @@ p { color: var(--muted); }
 .nav-menu a:hover::after,.nav-menu a.active::after { transform: scaleX(1); }
 .theme-toggle {
   flex-shrink: 0; background: transparent; color: var(--text); border: 1px solid var(--border);
-  padding: 9px 12px; border-radius: 100px; font: 600 .78rem/1.4 inherit;
+  padding: 9px 12px; border-radius: 100px; font-family: inherit; font-size: .78rem; font-weight: 600; line-height: 1.4;
   cursor: pointer; transition: border-color .25s ease, background .25s ease;
 }
 .theme-toggle:hover { border-color: var(--accent); background: var(--panel); }
