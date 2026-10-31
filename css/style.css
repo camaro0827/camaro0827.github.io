@@ -63,3 +63,29 @@ p{color:var(--muted)}
  .embed{height:370px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
+
+/* Seven-page architecture additions: reuse Phase 2 design tokens */
+.site-header .container{gap:12px;flex-wrap:wrap}
+.site-header nav{flex:1;min-width:0}
+.nav-menu{justify-content:flex-end;gap:1px}
+.nav-menu a{padding:9px 10px;font-size:.92rem;white-space:nowrap}
+.theme-toggle{cursor:pointer;color:var(--text);background:var(--panel);border:1px solid var(--border);border-radius:9px;padding:8px 12px;font:inherit;font-size:.83rem}
+.theme-toggle:hover{border-color:var(--accent)}
+.narrow{max-width:850px}
+.home-hero{display:grid;grid-template-columns:1.4fr minmax(190px,.8fr);align-items:center;gap:55px}
+.hero-photo{width:100%;max-height:430px;object-fit:cover;border:1px solid var(--border);border-radius:20px}
+.prose{max-width:730px}
+.prose h2{font-size:1.45rem;margin:34px 0 14px}
+.prose p{font-size:1.08rem}
+.page-note{margin-top:30px;font-size:.9rem}
+.contact-list p{margin:6px 0 0}
+.card h2{font-size:1.4rem}
+.card .eyebrow{margin-bottom:10px}
+body.light-theme{--bg:#f5f8fc;--panel:#fff;--panel2:#e7eef8;--text:#14253a;--muted:#44566f;--accent:#08685a;--accent2:#2558a3;--border:#ced9e6}
+body.light-theme .site-header{background:#fff}
+body.light-theme .hero{background:linear-gradient(145deg,#edf5fb,#f5f8fc)}
+body.light-theme .card{background:#fff}
+body.light-theme .button{color:#fff}
+body.light-theme .button-outline{color:var(--text)}
+@media(max-width:1000px){.site-header nav{order:4;flex-basis:100%}.nav-menu{justify-content:center;flex-wrap:wrap}.site-header .container{padding-top:12px;padding-bottom:12px}}
+@media(max-width:720px){.site-header .container{flex-wrap:wrap}.site-header nav{display:none;order:5;flex-basis:100%}.site-header nav:has(.nav-menu.open){display:block}.nav-menu{flex-direction:column;align-items:stretch;gap:0}.menu-toggle{margin-left:auto}.home-hero{grid-template-columns:1fr;gap:28px}.hero-photo{max-width:320px}.theme-toggle{order:3}}
