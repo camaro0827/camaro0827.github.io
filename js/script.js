@@ -17,3 +17,19 @@ if (menuToggle && navMenu) {
     }
   });
 }
+const themeToggle = document.querySelector(".theme-toggle");
+if (themeToggle) {
+  const applyTheme = light => {
+    document.body.classList.toggle("light-theme", light);
+    themeToggle.textContent = light ? "Dark mode" : "Light mode";
+    themeToggle.setAttribute("aria-pressed", String(light));
+  };
+  let savedTheme = null;
+  try { savedTheme = localStorage.getItem("portfolio-theme"); } catch (_) {}
+  applyTheme(savedTheme === "light");
+  themeToggle.addEventListener("click", () => {
+    const light = !document.body.classList.contains("light-theme");
+    applyTheme(light);
+    try { localStorage.setItem("portfolio-theme", light ? "light" : "dark"); } catch (_) {}
+  });
+}
