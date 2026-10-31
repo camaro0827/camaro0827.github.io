@@ -40,8 +40,14 @@ if (!reduceMotion && "IntersectionObserver" in window) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("in-view");
-        if (!entry.target.closest(".skills-grid")) observer.unobserve(entry.target);
-      } else if (entry.target.closest(".skills-grid")) {
+        // About page text and Skills cards should replay whenever re-entering view.
+        const replay = entry.target.closest(".skills-grid, .prose") ||
+          (document.querySelector(".prose") && entry.target.classList.contains("page-heading"));
+        if (!replay) observer.unobserve(entry.target);
+      } else if (
+        entry.target.closest(".skills-grid, .prose") ||
+        (document.querySelector(".prose") && entry.target.classList.contains("page-heading"))
+      ) {
         entry.target.classList.remove("in-view");
       }
     });
