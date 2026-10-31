@@ -6,7 +6,9 @@ const menuToggle = document.querySelector(".menu-toggle");
 const navMenu = document.querySelector(".nav-menu");
 
 if (menuToggle && navMenu) {
+  menuToggle.setAttribute("aria-expanded", "false");
   menuToggle.addEventListener("click", () => {
-    navMenu.classList.toggle("open");
+    const isOpen = navMenu.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
   });
 }
