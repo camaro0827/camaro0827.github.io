@@ -98,10 +98,8 @@ p { color: var(--muted); }
 .home-hero > div > p:not(.eyebrow) { font-size: clamp(1.08rem,1.6vw,1.29rem); max-width: 590px; line-height: 1.8; }
 .hero-photo {
   width: 100%; max-height: 570px; aspect-ratio: 4/5; object-fit: cover;
-  border-radius: 3px; border: 1px solid var(--border); filter: saturate(.78);
-  box-shadow: var(--shadow); transition: filter .7s var(--ease), transform .7s var(--ease);
+  border-radius: 3px; border: 1px solid var(--border); box-shadow: var(--shadow);
 }
-.hero-photo:hover { filter: saturate(1); transform: translateY(-7px) scale(1.012); }
 .actions { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 37px; }
 .button {
   display: inline-flex; align-items: center; justify-content: center;
@@ -192,4 +190,54 @@ body.light-theme .card { background: var(--surface-soft); }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
   body.motion-ready .reveal { opacity: 1; transform: none; }
+}
+
+/* Portfolio preferences: static portrait, repeatable skill reveals, document viewer */
+body.motion-ready .home-hero .hero-photo.reveal,
+body.motion-ready .home-hero .hero-photo.reveal.in-view {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+body.motion-ready .skills-grid .card {
+  transition-delay: 0ms;
+}
+body.motion-ready .skills-grid .card:nth-child(2),
+body.motion-ready .skills-grid .card:nth-child(3),
+body.motion-ready .skills-grid .card:nth-child(4) {
+  transition-delay: 0ms;
+}
+.skills-grid .card:nth-child(even) { --skill-offset: 24px; }
+.skills-grid .card:nth-child(odd) { --skill-offset: -24px; }
+body.motion-ready .skills-grid .card.reveal {
+  transform: translateX(var(--skill-offset));
+}
+body.motion-ready .skills-grid .card.reveal.in-view {
+  transform: translateX(0);
+}
+body.motion-ready .skills-grid .card.reveal.in-view:hover {
+  transform: translateY(-7px);
+}
+.document-section { padding-top: 20px; }
+.document-viewer { background: var(--surface-soft); border: 1px solid var(--border); padding: clamp(18px,3vw,30px); border-radius: 8px; }
+.document-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0 0 18px; }
+.document-tab, .document-expand {
+  border: 1px solid var(--border); color: var(--text); background: transparent; padding: 10px 16px;
+  font-family: inherit; font-size: .92rem; font-weight: 600; line-height: 1.4; border-radius: 5px; cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+.document-tab:hover,.document-expand:hover { border-color: var(--accent); }
+.document-tab[aria-selected="true"] { background: var(--accent); color: #071627; border-color: var(--accent); }
+.document-viewer .embed { height: 510px; margin: 0; width: 100%; }
+.document-viewer.is-expanded .embed { height: min(80vh,1000px); }
+.document-viewer .document-meta { margin-bottom: 18px; }
+.document-actions { display: flex; gap: 15px; flex-wrap: wrap; align-items: center; margin-top: 16px; }
+.document-actions .document-expand { margin-left: auto; }
+@media(max-width:720px) {
+ .document-viewer .embed { height: 420px; }
+ .document-viewer.is-expanded .embed { height: 75vh; }
+ .document-actions .document-expand { margin-left: 0; }
+}
+@media(prefers-reduced-motion:reduce) {
+ body.motion-ready .skills-grid .card.reveal { transform:none; }
 }
