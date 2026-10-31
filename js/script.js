@@ -40,7 +40,9 @@ if (!reduceMotion && "IntersectionObserver" in window) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("in-view");
-        observer.unobserve(entry.target);
+        if (!entry.target.closest(".skills-grid")) observer.unobserve(entry.target);
+      } else if (entry.target.closest(".skills-grid")) {
+        entry.target.classList.remove("in-view");
       }
     });
   }, { threshold: .08, rootMargin: "0px 0px -30px 0px" });
@@ -66,4 +68,45 @@ if (!reduceMotion) {
   }, { passive: true });
   window.addEventListener("resize", updateProgress);
   updateProgress();
+}
+
+/* Switch between existing published Google Docs, without cloning their content. */
+const documentViewer = document.querySelector("[data-document-viewer]");
+if (documentViewer) {
+  const tabs = Array.from(documentViewer.querySelectorAll("[role=tab]"));
+  const frame = documentViewer.querySelector("[data-doc-frame]");
+  const panel = documentViewer.querySelector("[role=tabpanel]");
+  const label = documentViewer.querySelector("[data-doc-label]");
+  const open = documentViewer.querySelector("[data-doc-open]");
+  const expand = documentViewer.querySelector("[data-doc-expand]");
+  function chooseDoc(tab, focus = false) {
+    tabs.forEach(item => {
+      const selected = item === tab;
+      item.setAttribute("aria-selected", String(selected));
+      item.tabIndex = selected ? 0 : -1;
+    });
+    panel.setAttribute("aria-labelledby", tab.id);
+    const title = tab.dataset.docTitle;
+    const url = tab.dataset.docUrl;
+    frame.src = url + "?embedded=true";
+    frame.title = title + " Google Doc";
+    label.textContent = "Showing: " + title;
+    open.href = url;
+    if (focus) tab.focus();
+  }
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => chooseDoc(tab));
+    tab.addEventListener("keydown", event => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1
+        : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+      chooseDoc(tabs[next], true);
+    });
+  });
+  expand.addEventListener("click", () => {
+    const expanded = documentViewer.classList.toggle("is-expanded");
+    expand.textContent = expanded ? "Collapse preview" : "Expand preview";
+    expand.setAttribute("aria-pressed", String(expanded));
+  });
 }
