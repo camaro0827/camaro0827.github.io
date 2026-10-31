@@ -1,256 +1,65 @@
-/* =========================================================
-   STYLE.CSS — All the colors and spacing for the whole site
-   live in this ONE file. Change something here and every
-   page updates at once.
-   ========================================================= */
-
-/* ---- 1. COLORS -----------------------------------------
-   Change these six values to re-theme the entire site.
-   Try a color picker: https://coolors.co or your browser's
-   built-in color picker in dev tools.
-   ---------------------------------------------------------- */
-:root {
-  --color-bg: #2d2c2c;        /* page background */
-  --color-text: #f5f5f5;      /* main text color */
-  --color-primary: #1a5ca3;   /* header, links, buttons */
-  --color-primary-dark: #1a4971; /* hover state for links/buttons */
-  --color-accent: #e51616;    /* small highlights, e.g. active nav link */
-  --color-border: #4870a4;    /* light lines / card borders */
+/* Carlos Amaro portfolio: responsive design system */
+:root{--bg:#09111f;--panel:#111e30;--panel2:#17263b;--text:#f2f6fc;--muted:#afc0d5;--accent:#66e3cf;--accent2:#7aabff;--border:#304259;--max:1100px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:var(--accent);text-underline-offset:4px}
+a:hover{color:#a6fff0}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+img{display:block;max-width:100%;height:auto}
+.container{width:min(calc(100% - 40px),var(--max));margin-inline:auto}
+section{padding:64px 0}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(2.4rem,6vw,4.7rem);line-height:1.13;letter-spacing:-.045em}
+h2{font-size:clamp(1.7rem,3vw,2.4rem);line-height:1.2;letter-spacing:-.03em}
+h3{font-size:1.22rem;line-height:1.3}
+p{color:var(--muted)}
+.site-header{background:#0c1726;border-bottom:1px solid var(--border);position:relative;z-index:10}
+.site-header .container{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:76px}
+.site-title{color:var(--text);font-size:1.25rem;font-weight:800;letter-spacing:-.03em;text-decoration:none}
+.site-title:hover{color:var(--accent)}
+.nav-menu{display:flex;align-items:center;list-style:none;gap:8px;margin:0;padding:0}
+.nav-menu a{display:block;color:var(--muted);font-weight:650;text-decoration:none;padding:10px 13px;border-radius:9px}
+.nav-menu a:hover,.nav-menu a.active{color:var(--text);background:var(--panel2)}
+.nav-menu a.active{box-shadow:inset 0 -2px var(--accent)}
+.menu-toggle{display:none;cursor:pointer;border:1px solid var(--border);border-radius:9px;background:var(--panel);padding:10px}
+.menu-toggle span{width:23px;height:2px;display:block;background:var(--text);margin:4px 0}
+.hero{background:radial-gradient(ellipse at 78% 16%,#1b3753 0%,transparent 55%),linear-gradient(145deg,#0d1a2a,#09111f);padding:105px 0 100px;border-bottom:1px solid var(--border)}
+.hero-inner{max-width:800px}
+.eyebrow{color:var(--accent);font-weight:750;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem;margin-bottom:20px}
+.hero p{font-size:clamp(1.07rem,2vw,1.3rem);max-width:650px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 20px;background:var(--accent);color:#06131d;font-weight:750;border-radius:10px;text-decoration:none;transition:transform .15s ease,background .15s ease}
+.button:hover{color:#06131d;background:#a6fff0;text-decoration:none;transform:translateY(-2px)}
+.button-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.button-outline:hover{background:var(--panel2);color:var(--text)}
+.page-heading{padding:70px 0 30px}
+.page-heading h1{font-size:clamp(2.3rem,5vw,3.8rem)}
+.page-heading p{max-width:690px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px}
+.card{padding:27px;border:1px solid var(--border);border-radius:17px;background:linear-gradient(145deg,var(--panel),#0e1928);min-height:180px}
+.card p{margin-bottom:15px}
+.card a{font-weight:750}
+.card .tags{font-size:.84rem;color:var(--accent2);margin:18px 0 0}
+.about-layout{display:grid;grid-template-columns:minmax(200px,320px) 1fr;align-items:center;gap:45px}
+.about-photo{width:100%;max-height:390px;object-fit:cover;border-radius:18px;border:1px solid var(--border)}
+.about-copy p{font-size:1.06rem}
+.section-lead{max-width:690px;margin-bottom:28px}
+.contact-list{list-style:none;padding:0;display:grid;gap:16px}
+.contact-list li{background:var(--panel);padding:20px 24px;border:1px solid var(--border);border-radius:12px;overflow-wrap:anywhere}
+.embed{display:block;width:100%;height:480px;border:1px solid var(--border);border-radius:14px;margin-top:30px;background:white}
+.site-footer{padding:28px 0;border-top:1px solid var(--border);text-align:center}
+.site-footer p{margin:0;font-size:.9rem}
+@media(max-width:720px){
+ .site-header .container{flex-wrap:wrap;min-height:72px}
+ .menu-toggle{display:block}
+ .nav-menu{display:none;flex-basis:100%;flex-direction:column;align-items:stretch;padding:0 0 14px}
+ .nav-menu.open{display:flex}
+ .nav-menu a{padding:12px 16px}
+ .hero{padding:72px 0}
+ section{padding:48px 0}
+ .about-layout{grid-template-columns:1fr;gap:25px}
+ .about-photo{max-width:340px}
+ .embed{height:370px}
 }
-
-/* ---- 2. RESET --------------------------------------------
-   Removes default browser spacing so layouts are predictable.
-   ---------------------------------------------------------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  color: var(--color-text);
-  background-color: var(--color-bg);
-  line-height: 1.6;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--color-primary-dark);
-  text-decoration: underline;
-}
-
-/* ---- 3. LAYOUT HELPERS ------------------------------------
-   .container keeps content from stretching edge-to-edge on
-   wide screens.
-   ---------------------------------------------------------- */
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-section {
-  padding: 40px 0;
-}
-
-/* ---- 4. HEADER + NAV MENU ---------------------------------- */
-.site-header {
-  background-color: var(--color-primary);
-  color: #ffffff;
-}
-
-.site-header .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 16px;
-  padding-bottom: 16px;
-}
-
-.site-title {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #ffffff;
-}
-
-.site-title:hover {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-/* Nav links list */
-.nav-menu {
-  list-style: none;
-  display: flex;
-  gap: 24px;
-}
-
-.nav-menu a {
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.nav-menu a:hover {
-  color: var(--color-accent);
-  text-decoration: none;
-}
-
-.nav-menu a.active {
-  border-bottom: 3px solid var(--color-accent);
-}
-
-/* Hamburger button — hidden on wide screens, shown on narrow ones */
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-}
-
-.menu-toggle span {
-  width: 26px;
-  height: 3px;
-  background-color: #ffffff;
-  display: block;
-}
-
-/* ---- 5. SMALL SCREENS (phones) -----------------------------
-   Below 700px wide: hide the nav links and show the hamburger
-   button instead. Clicking it adds/removes the "open" class
-   via js/script.js.
-   ---------------------------------------------------------- */
-@media (max-width: 700px) {
-  .menu-toggle {
-    display: flex;
-  }
-
-  .nav-menu {
-    display: none;
-    flex-direction: column;
-    gap: 0;
-    width: 100%;
-    background-color: var(--color-primary-dark);
-  }
-
-  .nav-menu.open {
-    display: flex;
-  }
-
-  .nav-menu li {
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .nav-menu a {
-    display: block;
-    padding: 14px 20px;
-  }
-
-  .site-header .container {
-    flex-wrap: wrap;
-  }
-}
-
-/* ---- 6. HERO SECTION (big intro block on the homepage) ----- */
-.hero {
-  text-align: center;
-  padding: 60px 20px;
-}
-
-.hero h1 {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-}
-
-.hero p {
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-}
-
-/* Button-style link, e.g. "See my work" */
-.button {
-  display: inline-block;
-  background-color: var(--color-primary);
-  color: #ffffff;
-  padding: 12px 24px;
-  border-radius: 4px;
-  font-weight: bold;
-}
-
-.button:hover {
-  background-color: var(--color-primary-dark);
-  color: #ffffff;
-  text-decoration: none;
-}
-
-/* ---- 7. CARDS (used on the Projects page) ------------------- */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: 20px;
-}
-
-.card h3 {
-  margin-bottom: 8px;
-}
-
-.card .tags {
-  margin-top: 10px;
-  font-size: 0.85rem;
-  color: var(--color-primary-dark);
-}
-
-/* ---- 8. SIMPLE FORM (Contact page) --------------------------- */
-form {
-  max-width: 500px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-top: 16px;
-  margin-bottom: 6px;
-}
-
-input,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  font-size: 1rem;
-  font-family: inherit;
-}
-
-form .button {
-  margin-top: 20px;
-  border: none;
-  cursor: pointer;
-}
-
-/* ---- 9. FOOTER ------------------------------------------------ */
-.site-footer {
-  text-align: center;
-  padding: 24px 0;
-  border-top: 1px solid var(--color-border);
-  color: var(--color-text);
-  font-size: 0.9rem;
-}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
