@@ -34,7 +34,7 @@ if (themeToggle) {
 }
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (!reduceMotion && "IntersectionObserver" in window) {
-  const targets = document.querySelectorAll(".page-heading, .prose > *, .card, .contact-list li, .home-hero > *, .embed");
+  const targets = document.querySelectorAll(".page-heading, .prose > *, .card, .contact-list li, .home-hero > div, .embed");
   targets.forEach(target => target.classList.add("reveal"));
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
