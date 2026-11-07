@@ -12,6 +12,7 @@ if (menuToggle && navMenu) {
     menuToggle.setAttribute("aria-expanded", String(isOpen));
   });
   navMenu.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+  window.addEventListener("resize", () => { if (window.innerWidth > 720) closeMenu(); });
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") closeMenu();
   });
@@ -34,19 +35,17 @@ if (themeToggle) {
 }
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (!reduceMotion && "IntersectionObserver" in window) {
-  const targets = document.querySelectorAll(".page-heading, .prose > *, .card, .contact-list li, .home-hero > div, .embed");
+  const targets = document.querySelectorAll(".page-heading, .card, .skill-row, .timeline-item, .education-entry, .document-viewer");
   targets.forEach(target => target.classList.add("reveal"));
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("in-view");
-        // About page text and Skills cards should replay whenever re-entering view.
-        const replay = entry.target.closest(".skills-grid, .prose") ||
-          (document.querySelector(".prose") && entry.target.classList.contains("page-heading"));
+        // Repeat only Skills row reveals, not ordinary narrative paragraphs.
+        const replay = entry.target.classList.contains("skill-row");
         if (!replay) observer.unobserve(entry.target);
       } else if (
-        entry.target.closest(".skills-grid, .prose") ||
-        (document.querySelector(".prose") && entry.target.classList.contains("page-heading"))
+        entry.target.classList.contains("skill-row")
       ) {
         entry.target.classList.remove("in-view");
       }
